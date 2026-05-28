@@ -8,36 +8,36 @@ import java.util.List;
 
 public class RegexHighlighter extends SyntaxHighlighter {
 
-    @Override
-    public List<HighlightRegion> collectMatches(String text) {
-        List<HighlightRegion> regions = new ArrayList<>();
+  @Override
+  public List<HighlightRegion> collectMatches(String text) {
+    List<HighlightRegion> regions = new ArrayList<>();
 
-        for (Token token : MiniJavaTokens.defaultTokens()) {
-            regions.addAll(token.test(text));
-        }
-
-        return regions;
+    for (Token token : MiniJavaTokens.defaultTokens()) {
+      regions.addAll(token.test(text));
     }
 
-    @Override
-    public List<HighlightRegion> resolveConflicts(List<HighlightRegion> regions) {
-        List<HighlightRegion> result = new ArrayList<>();
+    return regions;
+  }
 
-        for (HighlightRegion region : regions) {
-            boolean overlaps = false;
+  @Override
+  public List<HighlightRegion> resolveConflicts(List<HighlightRegion> regions) {
+    List<HighlightRegion> result = new ArrayList<>();
 
-            for (HighlightRegion chosen : result) {
-                if (region.start() < chosen.end() && chosen.start() < region.end()) {
-                    overlaps = true;
-                    break;
-                }
-            }
+    for (HighlightRegion region : regions) {
+      boolean overlaps = false;
 
-            if (!overlaps) {
-                result.add(region);
-            }
+      for (HighlightRegion chosen : result) {
+        if (region.start() < chosen.end() && chosen.start() < region.end()) {
+          overlaps = true;
+          break;
         }
+      }
 
-        return result;
+      if (!overlaps) {
+        result.add(region);
+      }
     }
+
+    return result;
+  }
 }

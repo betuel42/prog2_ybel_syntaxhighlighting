@@ -9,33 +9,30 @@ import org.junit.jupiter.api.Test;
 
 public class RegexHighlighterTest {
 
-    @Test
-    void shouldHighlightKeyword() {
-        RegexHighlighter highlighter = new RegexHighlighter();
+  @Test
+  void shouldHighlightKeyword() {
+    RegexHighlighter highlighter = new RegexHighlighter();
 
-        List<HighlightRegion> regions =
-            highlighter.computeRegions("public class Test");
+    List<HighlightRegion> regions = highlighter.computeRegions("public class Test");
 
-        assertFalse(regions.isEmpty());
-    }
+    assertFalse(regions.isEmpty());
+  }
 
-    @Test
-    void shouldResolveOverlappingRegions() {
-        RegexHighlighter highlighter = new RegexHighlighter();
+  @Test
+  void shouldResolveOverlappingRegions() {
+    RegexHighlighter highlighter = new RegexHighlighter();
 
-        List<HighlightRegion> regions =
-            highlighter.computeRegions("// public class");
+    List<HighlightRegion> regions = highlighter.computeRegions("// public class");
 
-        assertEquals(1, regions.size());
-    }
+    assertEquals(1, regions.size());
+  }
 
-    @Test
-    void shouldHandleEmptyText() {
-        RegexHighlighter highlighter = new RegexHighlighter();
+  @Test
+  void shouldHandleEmptyText() {
+    RegexHighlighter highlighter = new RegexHighlighter();
 
-        List<HighlightRegion> regions =
-            highlighter.computeRegions("");
+    List<HighlightRegion> regions = highlighter.computeRegions("");
 
-        assertTrue(regions.isEmpty());
-    }
+    assertTrue(regions.isEmpty());
+  }
 }

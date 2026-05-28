@@ -9,51 +9,51 @@ import org.junit.jupiter.api.Test;
 
 public class MiniJavaTokensTest {
 
-    @Test
-    void keywordShouldBeMatched() {
-        List<Token> tokens = MiniJavaTokens.defaultTokens();
+  @Test
+  void keywordShouldBeMatched() {
+    List<Token> tokens = MiniJavaTokens.defaultTokens();
 
-        boolean found = false;
+    boolean found = false;
 
-        for (Token token : tokens) {
-            if (!token.test("public class Test").isEmpty()) {
-                found = true;
-                break;
-            }
-        }
-
-        assertTrue(found);
+    for (Token token : tokens) {
+      if (!token.test("public class Test").isEmpty()) {
+        found = true;
+        break;
+      }
     }
 
-    @Test
-    void stringShouldBeMatched() {
-        List<Token> tokens = MiniJavaTokens.defaultTokens();
+    assertTrue(found);
+  }
 
-        boolean found = false;
+  @Test
+  void stringShouldBeMatched() {
+    List<Token> tokens = MiniJavaTokens.defaultTokens();
 
-        for (Token token : tokens) {
-            if (!token.test("\"hello\"").isEmpty()) {
-                found = true;
-                break;
-            }
-        }
+    boolean found = false;
 
-        assertTrue(found);
+    for (Token token : tokens) {
+      if (!token.test("\"hello\"").isEmpty()) {
+        found = true;
+        break;
+      }
     }
 
-    @Test
-    void commentShouldBeMatched() {
-        List<Token> tokens = MiniJavaTokens.defaultTokens();
+    assertTrue(found);
+  }
 
-        boolean found = false;
+  @Test
+  void commentShouldBeMatched() {
+    List<Token> tokens = MiniJavaTokens.defaultTokens();
 
-        for (Token token : tokens) {
-            if (!token.test("// comment").isEmpty()) {
-                found = true;
-                break;
-            }
-        }
+    boolean found = false;
 
-        assertTrue(found);
+    for (Token token : tokens) {
+      if (!token.test("// comment").isEmpty()) {
+        found = true;
+        break;
+      }
     }
+
+    assertTrue(found);
+  }
 }
