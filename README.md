@@ -17,3 +17,11 @@ This [work] by [Carsten Gips] and [contributors] is licensed under [MIT].
   [Carsten Gips]: https://github.com/cagix
   [contributors]: https://github.com/Programmiermethoden-CampusMinden/prog2_ybel_syntaxhighlighting/graphs/contributors
   [MIT]: LICENSE.md
+
+## Implementation notes
+
+This project includes:
+- MiniJava token definitions using regular expressions
+- Regex-based syntax highlighting
+- JUnit tests
+- GitHub Actions CI workflow
