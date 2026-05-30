@@ -25,3 +25,5 @@ This project includes:
 - Regex-based syntax highlighting
 - JUnit tests
 - GitHub Actions CI workflow
+
+Review test change.
