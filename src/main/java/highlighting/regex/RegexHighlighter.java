@@ -24,20 +24,25 @@ public class RegexHighlighter extends SyntaxHighlighter {
     List<HighlightRegion> result = new ArrayList<>();
 
     for (HighlightRegion region : regions) {
-      boolean overlaps = false;
-
-      for (HighlightRegion chosen : result) {
-        if (region.start() < chosen.end() && chosen.start() < region.end()) {
-          overlaps = true;
-          break;
-        }
-      }
-
-      if (!overlaps) {
+      if (!overlapsAny(region, result)) {
         result.add(region);
       }
     }
 
     return result;
+  }
+
+  private boolean overlapsAny(HighlightRegion region, List<HighlightRegion> chosenRegions) {
+    for (HighlightRegion chosen : chosenRegions) {
+      if (overlaps(region, chosen)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private boolean overlaps(HighlightRegion first, HighlightRegion second) {
+    return first.start() < second.end() && second.start() < first.end();
   }
 }
