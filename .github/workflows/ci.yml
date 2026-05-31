@@ -13,6 +13,7 @@ jobs:
               with:
                   distribution: temurin
                   java-version: 21
+                  cache: gradle
             - run: ./gradlew classes
 
     test:
@@ -23,6 +24,7 @@ jobs:
               with:
                   distribution: temurin
                   java-version: 21
+                  cache: gradle
             - run: ./gradlew test
 
     format:
@@ -33,4 +35,5 @@ jobs:
               with:
                   distribution: temurin
                   java-version: 21
+                  cache: gradle
             - run: ./gradlew spotlessCheck
