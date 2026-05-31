@@ -2,30 +2,56 @@ package highlighting.regex;
 
 import highlighting.core.HighlightRegion;
 import highlighting.core.SyntaxHighlighter;
-import java.util.*;
+import highlighting.presets.MiniJavaTokens;
+import java.util.ArrayList;
+import java.util.List;
 
-// TODO: Implement a scanning-based highlighting strategy that reads the input from left to right.
-// At each position, select the longest token that matches at this position. If there is a tie, the
-// token that appears earlier in the token list should be preferred.
-
-// TODO: Make this class inherit from {@code SyntaxHighlighter} and implement the abstract method
-// {@code collectMatches}. The scanning algorithm should ensure that the resulting list of regions
-// is already sorted, non-overlapping and contains only valid regions, so that no additional
-// normalisation or conflict resolution is required. Therefore, {@code resolveConflicts} can be left
-// as is, and {@code normalize} should be overridden as the identity function.
 public class ScanningHighlighter extends SyntaxHighlighter {
 
-  // TODO: Implement the scanning-based matching strategy here. Iterate from left to right over the
-  // input, determine the best matching token at each position, and collect all resulting highlight
-  // regions in order.
   @Override
   public List<HighlightRegion> collectMatches(String text) {
-    throw new UnsupportedOperationException("not implemented yet");
+    List<HighlightRegion> regions = new ArrayList<>();
+    List<Token> tokens = MiniJavaTokens.defaultTokens();
+
+    int index = 0;
+
+    while (index < text.length()) {
+      HighlightRegion bestMatch = null;
+
+      for (Token token : tokens) {
+        for (HighlightRegion region : token.test(text.substring(index))) {
+          if (region.start() == 0) {
+            HighlightRegion shifted =
+                new HighlightRegion(index + region.start(), index + region.end(), region.colour());
+
+            if (isBetterMatch(shifted, bestMatch)) {
+              bestMatch = shifted;
+            }
+          }
+        }
+      }
+
+      if (bestMatch == null) {
+        index++;
+      } else {
+        regions.add(bestMatch);
+        index = bestMatch.end();
+      }
+    }
+
+    return regions;
   }
 
-  // TODO: Implement the identity function here.
   @Override
   public List<HighlightRegion> normalize(List<HighlightRegion> candidates) {
-    throw new UnsupportedOperationException("not implemented yet");
+    return candidates;
+  }
+
+  private boolean isBetterMatch(HighlightRegion candidate, HighlightRegion currentBest) {
+    if (currentBest == null) {
+      return true;
+    }
+
+    return candidate.end() - candidate.start() > currentBest.end() - currentBest.start();
   }
 }
