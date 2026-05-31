@@ -22,7 +22,7 @@ public class ScanningHighlighter extends SyntaxHighlighter {
         for (HighlightRegion region : token.test(text.substring(index))) {
           if (region.start() == 0) {
             HighlightRegion shifted =
-                new HighlightRegion(index + region.start(), index + region.end(), region.color());
+                new HighlightRegion(index + region.start(), index + region.end(), region.colour());
 
             if (isBetterMatch(shifted, bestMatch)) {
               bestMatch = shifted;
