@@ -1,0 +1,15 @@
+Aufgabe 1.1 – AntlrTokenCollector
+
+Für das Syntaxhighlighting mit ANTLR wird der Eingabetext zuerst mit MiniJavaLexer in Tokens zerlegt. Anschließend werden die erzeugten Tokens aus dem CommonTokenStream durchlaufen und je nach Tokentyp in HighlightRegion-Objekte umgewandelt. Dabei werden z.B. Keywords, String-Literale, Character-Literale, Annotationen und Kommentare farblich markiert.
+
+Im Unterschied zum RegexHighlighter entstehen beim ANTLR-basierten Verfahren normalerweise keine überlappenden Regionen, da der Lexer den Text bereits eindeutig in aufeinanderfolgende Tokens zerlegt. Deshalb müssen normalize und resolveConflicts nicht speziell überschrieben werden. Die Standardimplementierung reicht aus.
+
+Im Vergleich zu Blatt 04 ist der RegexHighlighter einfacher zu implementieren, aber fehleranfälliger, da mehrere reguläre Ausdrücke dieselbe Stelle treffen können. Der ScanningHighlighter ist kontrollierter, weil er von links nach rechts arbeitet und das längste Match auswählt. Der ANTLR-Ansatz ist am aufwändigsten einzurichten, aber am robustesten, weil er auf einer echten Grammatik basiert.
+
+Aufgabe 1.2 – Pretty Printing
+
+Für das Pretty Printing wird aus dem Eingabetext zuerst ein Parse-Tree erzeugt. Dafür wird der Text mit MiniJavaLexer tokenisiert, anschließend über CommonTokenStream an den MiniJavaParser übergeben und mit parser.compilationUnit() ein Parse-Tree vom Typ MiniJavaParser.CompilationUnitContext erzeugt.
+
+Der PrettyPrinterVisitor traversiert diesen Parse-Tree mit dem Visitor-Pattern. Die Methoden visitCompilationUnit, visitClassBody, visitBlock und visitStatement wurden so implementiert, dass Klassenkörper, Blöcke und Statements strukturiert ausgegeben werden. Statements, die mit ; enden, erscheinen auf eigenen Zeilen. Blockinhalte werden eingerückt, und schließende Klammern stehen auf eigenen Zeilen.
+
+Bei der Ausgabe fehlen Kommentare und ursprüngliche Leerzeichen aus dem Input, weil Whitespace in der Grammatik übersprungen wird und Kommentare nicht normal als sichtbare Parser-Struktur ausgegeben werden. Der Pretty Printer erzeugt deshalb neue, einheitliche Einrückungen und Zeilenumbrüche statt die originale Formatierung exakt zu erhalten.
